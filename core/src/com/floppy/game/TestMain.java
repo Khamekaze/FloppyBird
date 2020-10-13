@@ -4,17 +4,20 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class TestMain extends ApplicationAdapter {
 
     SpriteBatch batch;
+    ShapeRenderer shapeRenderer;
 
     Player player;
 
     @Override
     public void create () {
         batch = new SpriteBatch();
-        player = new Player((Gdx.graphics.getWidth() / 2) - 20, (Gdx.graphics.getHeight() / 2) - 20);
+        player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 100f, 100f);
+        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -27,7 +30,12 @@ public class TestMain extends ApplicationAdapter {
         //Update
         update(deltaTime);
 
-        //Render
+        //Render hitboxes
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(0f, 0f, 0f, 1f);
+        shapeRenderer.rect(player.getHitbox().getX(), player.getHitbox().getY(), player.getHitbox().getWidth(), player.getHitbox().getHeight());
+        shapeRenderer.end();
+        //Render sprites
         batch.begin();
         player.render(batch);
         batch.end();
@@ -40,5 +48,6 @@ public class TestMain extends ApplicationAdapter {
     @Override
     public void dispose () {
         batch.dispose();
+        shapeRenderer.dispose();
     }
 }

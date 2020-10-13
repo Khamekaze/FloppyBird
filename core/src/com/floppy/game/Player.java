@@ -5,25 +5,20 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 
-public class Player {
-    private float x, y;
-    private float width, height;
+public class Player extends Hitbox {
     private float yVelocity = 0f;
     private float gravity = 900f;
     private float flapVelocity = 360f;
     private float maxYVelocity = -1600f;
 
+    private boolean hasStarted = false;
+
     Texture img;
     Sprite playerSprite;
 
-    public Player(float x, float y) {
-        this.x = x;
-        this.y = y;
-
-        width = 100f;
-        height = 100f;
+    public Player(float x, float y, float width, float height) {
+        super(x, y, width, height);
 
         img = new Texture("sprites/badlogic.jpg");
         playerSprite = new Sprite(img);
@@ -31,13 +26,17 @@ public class Player {
     }
 
     public void update(float dt) {
+
         flap();
-        applyGravity(dt);
+        if(hasStarted) {
+            applyGravity(dt);
+        }
         playerSprite.setPosition(x, y);
+        super.update(dt);
     }
 
     public void render(SpriteBatch batch) {
-        playerSprite.draw(batch);
+        //playerSprite.draw(batch);
     }
 
     void applyGravity(float dt) {
@@ -51,6 +50,9 @@ public class Player {
 
     void flap() {
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if(!hasStarted) {
+                hasStarted = true;
+            }
             yVelocity = flapVelocity;
         }
     }
@@ -69,5 +71,9 @@ public class Player {
 
     public float getHeight() {
         return height;
+    }
+
+    public boolean hasStarted() {
+        return hasStarted;
     }
 }
