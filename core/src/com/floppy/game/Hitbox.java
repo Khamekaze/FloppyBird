@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 public abstract class Hitbox {
     Rectangle hitBox;
 
-    float x, y, width, height;
+    protected float x, y, width, height;
 
     public Hitbox(float x, float y, float width, float height) {
         this.x = x;
@@ -28,9 +28,10 @@ public abstract class Hitbox {
         return hitBox;
     }
 
-    public void checkPlayerCollision(Rectangle playerHitbox) {
+    public boolean checkPlayerCollision(Rectangle playerHitbox) {
         if(hitBox.overlaps(playerHitbox)) {
-            //Kill player
+            return true;
         }
+        return false;
     }
 }

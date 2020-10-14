@@ -10,6 +10,7 @@ public class TestMain extends ApplicationAdapter {
 
     SpriteBatch batch;
     ShapeRenderer shapeRenderer;
+    CollisionManager collisionManager;
 
     Player player;
 
@@ -18,6 +19,7 @@ public class TestMain extends ApplicationAdapter {
         batch = new SpriteBatch();
         player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 100f, 100f);
         shapeRenderer = new ShapeRenderer();
+        //collisionManager = new CollisionManager(player);
     }
 
     @Override
