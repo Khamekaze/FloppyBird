@@ -12,6 +12,8 @@ public class PlayerTestMain extends ApplicationAdapter {
     ShapeRenderer shapeRenderer;
     CollisionManager collisionManager;
 
+    Obstacle obstacle;
+
     Player player;
 
     @Override
@@ -20,6 +22,7 @@ public class PlayerTestMain extends ApplicationAdapter {
         player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 100f, 100f);
         shapeRenderer = new ShapeRenderer();
         //collisionManager = new CollisionManager(player);
+        obstacle = new Obstacle(600f, 0f, 0f, 0f);
     }
 
     @Override
@@ -40,11 +43,13 @@ public class PlayerTestMain extends ApplicationAdapter {
         //Render sprites
         batch.begin();
         player.render(batch);
+        obstacle.render(batch);
         batch.end();
     }
 
     public void update(float deltaTime) {
         player.update(deltaTime);
+        obstacle.update(deltaTime);
     }
 
     @Override
