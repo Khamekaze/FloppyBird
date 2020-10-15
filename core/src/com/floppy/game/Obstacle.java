@@ -41,6 +41,7 @@ public class Obstacle extends Hitbox {
         positionTubeTop.set(x, positionTubeTop.y);
         tubeTopSprite.setPosition(positionTubeTop.x, positionTubeTop.y);
         tubeBotSprite.setPosition(positionTubeBot.x, positionTubeBot.y);
+        super.update(dt);
     }
 
     public void render(SpriteBatch batch) {

@@ -6,9 +6,9 @@ import java.util.List;
 public class CollisionManager {
 
     Player player;
-    List<Hitbox> obstacleHitboxes;
+    List<Obstacle> obstacleHitboxes;
 
-    public CollisionManager(Player player, ArrayList<Hitbox> obstacleHitboxes) {
+    public CollisionManager(Player player, ArrayList<Obstacle> obstacleHitboxes) {
         this.player = player;
         this.obstacleHitboxes = obstacleHitboxes;
     }
@@ -18,7 +18,7 @@ public class CollisionManager {
     }
 
     void checkCollisions() {
-        for(Hitbox h : obstacleHitboxes) {
+        for(Obstacle h : obstacleHitboxes) {
             if(h.checkPlayerCollision(player.getHitbox())) {
                 System.out.println("OBSTACLE HIT");
             }

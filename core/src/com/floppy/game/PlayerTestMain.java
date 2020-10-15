@@ -13,15 +13,16 @@ public class PlayerTestMain extends ApplicationAdapter {
     CollisionManager collisionManager;
 
     Obstacle obstacle;
-
+    ObstacleManager obstacleManager;
     Player player;
 
     @Override
     public void create () {
         batch = new SpriteBatch();
         player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 100f, 100f);
+        obstacleManager = new ObstacleManager();
         shapeRenderer = new ShapeRenderer();
-        //collisionManager = new CollisionManager(player);
+        collisionManager = new CollisionManager(player, obstacleManager.getObstacles());
         obstacle = new Obstacle(600f, 0f, 0f, 0f);
     }
 
@@ -43,13 +44,16 @@ public class PlayerTestMain extends ApplicationAdapter {
         //Render sprites
         batch.begin();
         player.render(batch);
-        obstacle.render(batch);
+        obstacleManager.render(batch);
+        //obstacle.render(batch);
         batch.end();
     }
 
     public void update(float deltaTime) {
         player.update(deltaTime);
-        obstacle.update(deltaTime);
+        //obstacle.update(deltaTime);
+        obstacleManager.update(deltaTime);
+        collisionManager.update(deltaTime);
     }
 
     @Override
