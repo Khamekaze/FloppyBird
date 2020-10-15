@@ -2,7 +2,7 @@ package com.floppy.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.floppy.game.TestMain;
+import com.floppy.game.PlayerTestMain;
 
 public class TestLauncher {
     public static void main (String[] arg) {
@@ -10,6 +10,6 @@ public class TestLauncher {
         config.width = 720;
         config.height = 1080;
 
-        new LwjglApplication(new TestMain(), config);
+        new LwjglApplication(new PlayerTestMain(), config);
     }
 }

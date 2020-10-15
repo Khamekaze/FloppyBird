@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class TestMain extends ApplicationAdapter {
+public class PlayerTestMain extends ApplicationAdapter {
 
     SpriteBatch batch;
     ShapeRenderer shapeRenderer;
