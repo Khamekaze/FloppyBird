@@ -19,7 +19,7 @@ public class PlayerTestMain extends ApplicationAdapter {
     @Override
     public void create () {
         batch = new SpriteBatch();
-        player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 100f, 100f);
+        player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 131, 93f);
         obstacleManager = new ObstacleManager();
         shapeRenderer = new ShapeRenderer();
         collisionManager = new CollisionManager(player, obstacleManager.getObstacles());

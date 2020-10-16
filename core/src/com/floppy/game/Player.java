@@ -21,7 +21,7 @@ public class Player extends Hitbox {
     public Player(float x, float y, float width, float height) {
         super(x, y, width, height);
 
-        img = new Texture("sprites/badlogic.jpg");
+        img = new Texture("sprites/bird.png");
         playerSprite = new Sprite(img);
         playerSprite.setSize(width, height);
     }
@@ -37,7 +37,7 @@ public class Player extends Hitbox {
     }
 
     public void render(SpriteBatch batch) {
-        //playerSprite.draw(batch);
+        playerSprite.draw(batch);
     }
 
     void applyGravity(float dt) {
