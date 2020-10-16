@@ -8,17 +8,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player extends Hitbox {
     private float yVelocity = 0f;
     private float gravity = 1400f;
     private float flapVelocity = 550f;
     private float maxYVelocity = -1600f;
+    private float flapDelay = 0.1f;
 
     private boolean hasStarted = false;
     private boolean flapped = false;
 
-    Texture img;
-    Sprite playerSprite;
+    List<Sprite> playerSprites;
+    int spriteIndex = 0;
 
     public Player(float x, float y, float width, float height) {
         super(x, y, width, height);
@@ -26,24 +30,38 @@ public class Player extends Hitbox {
         hitBox.width = width * 0.85f;
         hitBox.x += width * 0.1f;
 
-        img = new Texture("sprites/bird.png");
-        playerSprite = new Sprite(img);
-        playerSprite.setSize(width, height);
+        float sizeModifier = 0.95f;
+
+        Texture birdTex1 = new Texture("sprites/Bird1.png");
+        Texture birdTex2 = new Texture("sprites/bird2.png");
+        Texture birdTex3 = new Texture("sprites/Bird3.png");
+        Sprite playerSprite1 = new Sprite(birdTex1);
+        playerSprite1.setSize(width * sizeModifier, height * sizeModifier);
+        Sprite playerSprite2 = new Sprite(birdTex2);
+        playerSprite2.setSize(width * sizeModifier, height * sizeModifier);
+        Sprite playerSprite3 = new Sprite(birdTex3);
+        playerSprite3.setSize(width * sizeModifier, height * sizeModifier);
+
+        playerSprites = new ArrayList<>();
+        playerSprites.add(playerSprite1);
+        playerSprites.add(playerSprite2);
+        playerSprites.add(playerSprite3);
     }
 
     public void update(float dt) {
 
         flap();
+        animatePlayer(dt);
         if(hasStarted) {
             applyGravity(dt);
         }
-        playerSprite.setPosition(x, y);
+        playerSprites.get(spriteIndex).setPosition(x, y);
         super.update(dt);
         hitBox.x += width * 0.1f;
     }
 
     public void render(SpriteBatch batch) {
-        playerSprite.draw(batch);
+        playerSprites.get(spriteIndex).draw(batch);
     }
 
     void applyGravity(float dt) {
@@ -69,6 +87,28 @@ public class Player extends Hitbox {
         } else {
             flapped = false;
         }
+    }
+
+    public void animatePlayer(float dt) {
+        if(flapDelay > 0f) {
+            flapDelay -= dt;
+        } else {
+            spriteIndex++;
+            if(spriteIndex > playerSprites.size() - 1) {
+                spriteIndex = 0;
+            }
+            flapDelay = 0.1f;
+        }
+
+        /*
+        if(flapped) {
+            if(spriteIndex < playerSprites.size() - 1) {
+                spriteIndex++;
+            } else {
+
+            }
+        }
+        */
     }
 
     public float getX() {
