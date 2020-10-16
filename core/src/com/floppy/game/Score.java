@@ -43,7 +43,7 @@ public class Score {
             highScore = numberOfObstaclesPassed;
             try {
                 FileWriter fw = new FileWriter("./highscore.txt");
-                fw.write(String.valueOf(highScore)); //kom ihåg
+                fw.write(String.valueOf(highScore));
                 fw.close();
             }catch (Exception e){
                 System.out.println("Could not save High Score!");
