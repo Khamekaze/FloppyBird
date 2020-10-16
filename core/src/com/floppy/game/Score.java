@@ -2,6 +2,7 @@ package com.floppy.game;
 
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.FileWriter;
 import java.sql.SQLOutput;
 import java.util.Scanner;
 
@@ -33,10 +34,18 @@ public class Score {
             status = 2;
         }
        }
+
     }
     public static void higherPoints() {
         if(numberOfObstaclesPassed > highScore){
             highScore = numberOfObstaclesPassed;
+            try {
+                FileWriter fw = new FileWriter("./highscore.txt");
+                fw.write(String.valueOf(highScore)); //kom ihåg
+                fw.close();
+            }catch (Exception e){
+                System.out.println("Could not save High Score!");
+            }
         }
     }
     public static void resetScore (){numberOfObstaclesPassed = 0; }
