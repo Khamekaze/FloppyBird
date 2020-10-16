@@ -2,6 +2,7 @@ package com.floppy.game;
 
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.sql.SQLOutput;
 import java.util.Scanner;
@@ -13,6 +14,7 @@ public class Score {
     private static int status;
 
     public static void main(String[] args) {
+        readHighScoreFile();
         Scanner sc = new Scanner(System.in);
         status = sc.nextInt();
        while(status == 1) {
@@ -46,6 +48,16 @@ public class Score {
             }catch (Exception e){
                 System.out.println("Could not save High Score!");
             }
+        }
+    }
+    public static void readHighScoreFile () {
+        File file = new File("./highscore.txt");
+        try{
+            Scanner rf = new Scanner(file);
+            highScore = Integer.valueOf(rf.next());
+            rf.close();
+        }catch (Exception e){
+
         }
     }
     public static void resetScore (){numberOfObstaclesPassed = 0; }
