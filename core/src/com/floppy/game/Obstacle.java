@@ -15,7 +15,7 @@ public class Obstacle {
     private Sprite tubeBotSprite;
     private Vector2 positionTubeTop;
     private Vector2 positionTubeBot;
-    private static final int tubeOpening = 300;
+    private static final int tubeOpening = 250;
     private static final int lowestOpening = 120;
     private static final int randomBoundary = 330;
     private float speed = 200f;
