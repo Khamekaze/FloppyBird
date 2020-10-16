@@ -3,6 +3,7 @@ package com.floppy.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -15,9 +16,11 @@ public class PlayerTestMain extends ApplicationAdapter {
     Obstacle obstacle;
     ObstacleManager obstacleManager;
     Player player;
+    private Texture background;
 
     @Override
     public void create () {
+        background = new Texture("bg.png");
         batch = new SpriteBatch();
         player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 131, 93f);
         obstacleManager = new ObstacleManager();
@@ -47,6 +50,7 @@ public class PlayerTestMain extends ApplicationAdapter {
         shapeRenderer.end();
         //Render sprites
         batch.begin();
+        batch.draw(background, 0,0, 1281, 720);
         player.render(batch);
         obstacleManager.render(batch);
         //obstacle.render(batch);
