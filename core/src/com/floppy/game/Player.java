@@ -13,6 +13,7 @@ public class Player extends Hitbox {
     private float maxYVelocity = -1600f;
 
     private boolean hasStarted = false;
+    private boolean flapped = false;
 
     Texture img;
     Sprite playerSprite;
@@ -53,7 +54,14 @@ public class Player extends Hitbox {
             if(!hasStarted) {
                 hasStarted = true;
             }
-            yVelocity = flapVelocity;
+            if(!flapped) {
+                yVelocity = flapVelocity;
+                System.out.println("FLAP");
+                flapped = true;
+            }
+
+        } else {
+            flapped = false;
         }
     }
 

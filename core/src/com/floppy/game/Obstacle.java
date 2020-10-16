@@ -3,11 +3,12 @@ package com.floppy.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.Random;
 
-public class Obstacle extends Hitbox {
+public class Obstacle {
     private Texture tubeTop;
     private Texture tubeBot;
     private Sprite tubeTopSprite;
@@ -18,10 +19,14 @@ public class Obstacle extends Hitbox {
     private static final int lowestOpening = 120;
     private static final int randomBoundary = 330;
     private float speed = 200f;
+    private float xPos;
     private Random randomNumber;
 
+    private ObstacleHitbox topHitbox;
+    private ObstacleHitbox botHitbox;
+
     public Obstacle(float x, float y, float width, float height){
-        super(x, y, width, height);
+        xPos = x;
         tubeTop = new Texture("TubeDown.png");
         tubeBot = new Texture("Tube.png");
         tubeTopSprite = new Sprite(tubeTop);
@@ -33,20 +38,33 @@ public class Obstacle extends Hitbox {
 
         tubeTopSprite.setPosition(positionTubeTop.x, positionTubeTop.y);
         tubeBotSprite.setPosition(positionTubeBot.x, positionTubeBot.y);
+
+        topHitbox = new ObstacleHitbox(positionTubeTop.x, positionTubeTop.y, tubeTopSprite.getWidth(), tubeTopSprite.getHeight());
+        botHitbox = new ObstacleHitbox(positionTubeBot.x, positionTubeBot.y, tubeBotSprite.getWidth(), tubeBotSprite.getHeight());
     }
 
     public void update(float dt) {
-        x -= speed * dt;
-        positionTubeBot.set(x, positionTubeBot.y);
-        positionTubeTop.set(x, positionTubeTop.y);
+        xPos -= speed * dt;
+        positionTubeBot.set(xPos, positionTubeBot.y);
+        positionTubeTop.set(xPos, positionTubeTop.y);
         tubeTopSprite.setPosition(positionTubeTop.x, positionTubeTop.y);
         tubeBotSprite.setPosition(positionTubeBot.x, positionTubeBot.y);
-        super.update(dt);
+        topHitbox.setPosition(positionTubeTop);
+        botHitbox.setPosition(positionTubeBot);
+        topHitbox.update(dt);
+        botHitbox.update(dt);
     }
 
     public void render(SpriteBatch batch) {
         tubeTopSprite.draw(batch);
         tubeBotSprite.draw(batch);
+    }
+
+    public boolean checkPlayerCollision(Rectangle h) {
+        if(topHitbox.checkPlayerCollision(h) || botHitbox.checkPlayerCollision(h)) {
+            return true;
+        }
+        return false;
     }
 
     public Texture getTubeTop() {
@@ -63,5 +81,13 @@ public class Obstacle extends Hitbox {
 
     public Vector2 getPositionTubeBot() {
         return positionTubeBot;
+    }
+
+    public float getXPosition() {
+        return xPos;
+    }
+
+    public ObstacleHitbox getTopHitbox() {
+        return topHitbox;
     }
 }

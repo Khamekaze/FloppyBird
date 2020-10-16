@@ -18,8 +18,8 @@ public class CollisionManager {
     }
 
     void checkCollisions() {
-        for(Obstacle h : obstacleHitboxes) {
-            if(h.checkPlayerCollision(player.getHitbox())) {
+        for(Obstacle o : obstacleHitboxes) {
+            if(o.checkPlayerCollision(player.getHitbox())) {
                 System.out.println("OBSTACLE HIT");
             }
         }

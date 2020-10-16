@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class ObstacleManager {
     ArrayList<Obstacle> obstacles = new ArrayList<>();
+    boolean removed = false;
 
     public ObstacleManager (){
         obstacles.add(new Obstacle(600f,0 ,0 , 0));
@@ -15,12 +16,15 @@ public class ObstacleManager {
         obstacles.add(new Obstacle(1800f,0 ,0 , 0));
     }
     public void update(float dt) {
-        for(int i = obstacles.size()-1; i >=0; --i){
-            removeObstacles(obstacles.get(i));
-        }
+        removed = false;
         for(Obstacle o: obstacles){
             o.update(dt);
         }
+
+        for(int i = obstacles.size()-1; i >=0; --i){
+            removeObstacles(obstacles.get(i));
+        }
+
 
     }
     public void render(SpriteBatch batch){
@@ -28,10 +32,12 @@ public class ObstacleManager {
             o.render(batch);
         }
     }
+
     public void removeObstacles(Obstacle obstacle){
-        if(obstacle.x <= -200f){
+        if(obstacle.getXPosition() <= -200f && !removed){
             obstacles.remove(obstacle);
             obstacles.add(new Obstacle(1400, 0, 0,0 ));
+            removed = true;
         }
     }
 

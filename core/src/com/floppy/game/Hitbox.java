@@ -3,6 +3,7 @@ package com.floppy.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public abstract class Hitbox {
     Rectangle hitBox;
@@ -33,5 +34,10 @@ public abstract class Hitbox {
             return true;
         }
         return false;
+    }
+
+    public void setPosition(Vector2 pos) {
+        x = pos.x;
+        y = pos.y;
     }
 }
