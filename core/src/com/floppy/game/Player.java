@@ -5,11 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Polygon;
 
 public class Player extends Hitbox {
     private float yVelocity = 0f;
-    private float gravity = 900f;
-    private float flapVelocity = 360f;
+    private float gravity = 1400f;
+    private float flapVelocity = 550f;
     private float maxYVelocity = -1600f;
 
     private boolean hasStarted = false;
@@ -20,6 +22,9 @@ public class Player extends Hitbox {
 
     public Player(float x, float y, float width, float height) {
         super(x, y, width, height);
+
+        hitBox.width = width * 0.85f;
+        hitBox.x += width * 0.1f;
 
         img = new Texture("sprites/bird.png");
         playerSprite = new Sprite(img);
@@ -34,6 +39,7 @@ public class Player extends Hitbox {
         }
         playerSprite.setPosition(x, y);
         super.update(dt);
+        hitBox.x += width * 0.1f;
     }
 
     public void render(SpriteBatch batch) {
