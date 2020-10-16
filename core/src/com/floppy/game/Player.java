@@ -93,9 +93,9 @@ public class Player extends Hitbox {
         if(flapDelay > 0f) {
             flapDelay -= dt;
         } else {
-            spriteIndex++;
-            if(spriteIndex > playerSprites.size() - 1) {
-                spriteIndex = 0;
+            spriteIndex--;
+            if(spriteIndex < 0) {
+                spriteIndex = 2;
             }
             flapDelay = 0.1f;
         }
