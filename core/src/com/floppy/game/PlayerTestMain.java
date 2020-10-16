@@ -40,6 +40,10 @@ public class PlayerTestMain extends ApplicationAdapter {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0f, 0f, 0f, 1f);
         shapeRenderer.rect(player.getHitbox().getX(), player.getHitbox().getY(), player.getHitbox().getWidth(), player.getHitbox().getHeight());
+        shapeRenderer.rect(obstacleManager.obstacles.get(1).getTopHitbox().x,
+                obstacleManager.obstacles.get(1).getTopHitbox().y,
+                obstacleManager.obstacles.get(1).getTopHitbox().width,
+                obstacleManager.obstacles.get(1).getTopHitbox().height);
         shapeRenderer.end();
         //Render sprites
         batch.begin();
@@ -50,9 +54,11 @@ public class PlayerTestMain extends ApplicationAdapter {
     }
 
     public void update(float deltaTime) {
-        player.update(deltaTime);
-        //obstacle.update(deltaTime);
-        obstacleManager.update(deltaTime);
+        if(collisionManager.isPlayerAlive()) {
+            player.update(deltaTime);
+            //obstacle.update(deltaTime);
+            obstacleManager.update(deltaTime);
+        }
         collisionManager.update(deltaTime);
     }
 

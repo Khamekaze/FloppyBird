@@ -7,6 +7,7 @@ public class CollisionManager {
 
     Player player;
     List<Obstacle> obstacleHitboxes;
+    private boolean playerAlive = true;
 
     public CollisionManager(Player player, ArrayList<Obstacle> obstacleHitboxes) {
         this.player = player;
@@ -20,8 +21,12 @@ public class CollisionManager {
     void checkCollisions() {
         for(Obstacle o : obstacleHitboxes) {
             if(o.checkPlayerCollision(player.getHitbox())) {
-                System.out.println("OBSTACLE HIT");
+                playerAlive = false;
             }
         }
+    }
+
+    public boolean isPlayerAlive() {
+        return playerAlive;
     }
 }
