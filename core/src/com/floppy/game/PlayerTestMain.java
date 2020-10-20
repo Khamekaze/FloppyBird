@@ -26,7 +26,7 @@ public class PlayerTestMain extends ApplicationAdapter {
     public void create () {
         background = new Texture("bg.png");
         batch = new SpriteBatch();
-        player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 131, 93f);
+        player = new Player((Gdx.graphics.getWidth() / 2 - 150f), (Gdx.graphics.getHeight() / 2), 131, 93f);
         obstacleManager = new ObstacleManager();
         shapeRenderer = new ShapeRenderer();
         collisionManager = new CollisionManager(player, obstacleManager.getObstacles());
@@ -99,7 +99,7 @@ public class PlayerTestMain extends ApplicationAdapter {
 
     void restartGame() {
         player = null;
-        player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 131, 93f);
+        player = new Player((Gdx.graphics.getWidth() / 2) - 150f, (Gdx.graphics.getHeight() / 2), 131, 93f);
         obstacleManager = null;
         obstacleManager = new ObstacleManager();
         collisionManager = null;
