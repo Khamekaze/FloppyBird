@@ -17,6 +17,7 @@ public class PlayerTestMain extends ApplicationAdapter {
     Obstacle obstacle;
     ObstacleManager obstacleManager;
     Player player;
+    Score scoreManager;
     private Texture background;
     Menu menu;
     boolean startGame = false;
@@ -31,6 +32,7 @@ public class PlayerTestMain extends ApplicationAdapter {
         collisionManager = new CollisionManager(player, obstacleManager.getObstacles());
         obstacle = new Obstacle(600f, 0f, 0f, 0f);
         menu = new Menu(100f, 400f);
+        scoreManager = new Score(obstacleManager);
     }
 
     @Override
@@ -49,9 +51,8 @@ public class PlayerTestMain extends ApplicationAdapter {
         player.render(batch);
         obstacleManager.render(batch);
         //obstacle.render(batch);
-        if(!startGame) {
-            menu.render(batch);
-        }
+        menu.render(batch);
+        scoreManager.render(batch);
         batch.end();
         //Render hitboxes
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -66,16 +67,24 @@ public class PlayerTestMain extends ApplicationAdapter {
     }
 
     public void update(float deltaTime) {
-        if(collisionManager.isPlayerAlive()) {
+        if(player.isAlive()) {
             player.update(deltaTime);
             //obstacle.update(deltaTime);
             if(startGame) {
                 obstacleManager.update(deltaTime);
+                menu.hideMenu();
+            }
+        } else {
+            scoreManager.setShowScore();
+            menu.setStateGameOver();
+            if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+                restartGame();
             }
         }
         collisionManager.update(deltaTime);
 
         menu.update(deltaTime);
+        scoreManager.update(deltaTime);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !startGame) {
             startGame = true;
@@ -86,5 +95,18 @@ public class PlayerTestMain extends ApplicationAdapter {
     public void dispose () {
         batch.dispose();
         shapeRenderer.dispose();
+    }
+
+    void restartGame() {
+        player = null;
+        player = new Player((Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2), 131, 93f);
+        obstacleManager = null;
+        obstacleManager = new ObstacleManager();
+        collisionManager = null;
+        collisionManager = new CollisionManager(player, obstacleManager.getObstacles());
+        menu.hideMenu();
+        scoreManager = null;
+        scoreManager = new Score(obstacleManager);
+        scoreManager.resetScore();
     }
 }

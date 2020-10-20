@@ -17,6 +17,7 @@ public class Player extends Hitbox {
     private float flapVelocity = 550f;
     private float maxYVelocity = -1600f;
     private float flapDelay = 0.1f;
+    private boolean isAlive = true;
 
     private boolean hasStarted = false;
     private boolean flapped = false;
@@ -56,6 +57,9 @@ public class Player extends Hitbox {
             applyGravity(dt);
         }
         playerSprites.get(spriteIndex).setPosition(x, y);
+        if(y >= 730f || y <= -60f) {
+            isAlive = false;
+        }
         super.update(dt);
     }
 
@@ -108,6 +112,14 @@ public class Player extends Hitbox {
             }
         }
         */
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean isAlive) {
+        this.isAlive = isAlive;
     }
 
     public float getX() {

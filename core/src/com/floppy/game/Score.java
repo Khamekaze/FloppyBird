@@ -1,5 +1,9 @@
 package com.floppy.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.w3c.dom.ls.LSOutput;
 
 import java.io.File;
@@ -10,17 +14,57 @@ import java.util.Scanner;
 public class Score {
     private static int numberOfObstaclesPassed = 0;
     private static int highScore;
+    private int newHighscore = 0;
     private static String userAnswer;
     private static int status;
+    private boolean showScore = false;
+    ObstacleManager obstacleManager;
+    BitmapFont font;
 
+    public Score(ObstacleManager obstacles) {
+        obstacleManager = obstacles;
+        font = new BitmapFont();
+        readHighScoreFile();
+    }
+
+    public void update(float dt) {
+        for(Obstacle o : obstacleManager.getObstacles()) {
+            if(o.getXPosition() <= 400f && !o.isHasGivenScore()) {
+                points();
+                o.giveScore();
+                System.out.println(numberOfObstaclesPassed);
+            }
+        }
+    }
+
+    public void render(SpriteBatch batch) {
+        if(showScore) {
+            font.draw(batch, String.valueOf(numberOfObstaclesPassed), 300f, 600f);
+            if(numberOfObstaclesPassed > highScore) {
+                font.draw(batch, "NEW HIGHSCORE!\n" +
+                        numberOfObstaclesPassed, 300f, 575f);
+            }
+        } else {
+            font.draw(batch, String.valueOf(numberOfObstaclesPassed), 540f, 700f);
+        }
+    }
+
+    public void setShowScore() {
+        if(!showScore) {
+            showScore = true;
+            compareScore();
+        }
+    }
+
+    /*
     public static void main(String[] args) {
         readHighScoreFile();
         Scanner sc = new Scanner(System.in);
         status = sc.nextInt();
        while(status == 1) {
            while(status == 1){
-            points();
-            System.out.println(getNumberOfObstaclesPassed());
+            //points();
+            //System.out.println(getNumberOfObstaclesPassed());
             status = sc.nextInt();
         }
         higherPoints();
@@ -38,19 +82,30 @@ public class Score {
        }
 
     }
-    public static void higherPoints() {
+    */
+
+    void compareScore() {
+        if(numberOfObstaclesPassed > highScore) {
+            newHighscore = numberOfObstaclesPassed;
+        } else {
+            newHighscore = highScore;
+        }
+
+        writeNewHighscore();
+    }
+
+    public void writeNewHighscore() {
         if(numberOfObstaclesPassed > highScore){
-            highScore = numberOfObstaclesPassed;
             try {
                 FileWriter fw = new FileWriter("./highscore.txt");
-                fw.write(String.valueOf(highScore));
+                fw.write(String.valueOf(numberOfObstaclesPassed));
                 fw.close();
             }catch (Exception e){
                 System.out.println("Could not save High Score!");
             }
         }
     }
-    public static void readHighScoreFile () {
+    public void readHighScoreFile () {
         File file = new File("./highscore.txt");
         try{
             Scanner rf = new Scanner(file);
@@ -60,9 +115,9 @@ public class Score {
 
         }
     }
-    public static void resetScore (){numberOfObstaclesPassed = 0; }
+    public void resetScore (){numberOfObstaclesPassed = 0; }
     public static void playAgain() { status = 1; }
-    public static void points() {numberOfObstaclesPassed++;}
-    public static int getNumberOfObstaclesPassed() {return numberOfObstaclesPassed;}
+    public void points() {numberOfObstaclesPassed++;}
+    public int getNumberOfObstaclesPassed() {return numberOfObstaclesPassed;}
     public static int getHighScore() {return highScore;}
 }

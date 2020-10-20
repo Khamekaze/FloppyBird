@@ -21,12 +21,8 @@ public class CollisionManager {
     void checkCollisions() {
         for(Obstacle o : obstacleHitboxes) {
             if(o.checkPlayerCollision(player.getHitbox())) {
-                playerAlive = false;
+                player.setAlive(false);
             }
         }
-    }
-
-    public boolean isPlayerAlive() {
-        return playerAlive;
     }
 }

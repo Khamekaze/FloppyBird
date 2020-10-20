@@ -21,6 +21,7 @@ public class Obstacle {
     private float speed = 230f;
     private float xPos;
     private Random randomNumber;
+    private boolean hasGivenScore = false;
 
     private ObstacleHitbox topHitbox;
     private ObstacleHitbox botHitbox;
@@ -89,5 +90,13 @@ public class Obstacle {
 
     public ObstacleHitbox getTopHitbox() {
         return topHitbox;
+    }
+
+    public boolean isHasGivenScore() {
+        return hasGivenScore;
+    }
+
+    public void giveScore() {
+        hasGivenScore = true;
     }
 }

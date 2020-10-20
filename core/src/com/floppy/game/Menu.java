@@ -12,17 +12,19 @@ import java.util.Scanner;
 
 public class Menu {
     private static int menuSelection;
-    private static final int STATE_MAIN_MENU = 0, STATE_HIGHSCORE = 1, STATE_INFO = 2;
+    private static final int STATE_MAIN_MENU = 0, STATE_HIGHSCORE = 1, STATE_INFO = 2, STATE_GAME_OVER = 3;
 
     private float x, y;
     BitmapFont font;
     private int currentState = 0;
+    boolean showMenu = true;
+    private int highScore = 0;
 
     public Menu(float x, float y) {
         this.x = x;
         this.y = y;
         font = new BitmapFont();
-
+        readHighscore();
     }
 
     public void update(float dt) {
@@ -30,16 +32,32 @@ public class Menu {
     }
 
     public void render(SpriteBatch batch) {
-        switch(currentState) {
-            case 0:
-                renderMainMenu(batch);
-                break;
-            case 1:
-                renderHighscoreMenu(batch);
-                break;
-            case 2:
-                renderInfoMenu(batch);
-                break;
+        if(showMenu) {
+            switch(currentState) {
+                case 0:
+                    renderMainMenu(batch);
+                    break;
+                case 1:
+                    renderHighscoreMenu(batch);
+                    break;
+                case 2:
+                    renderInfoMenu(batch);
+                    break;
+                case 3:
+                    renderGameOverMenu(batch);
+            }
+        }
+
+    }
+
+    private void readHighscore() {
+        File file = new File("./highscore.txt");
+        try{
+            Scanner rf = new Scanner(file);
+            highScore = Integer.valueOf(rf.next());
+            rf.close();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -66,6 +84,7 @@ public class Menu {
 
     private void renderHighscoreMenu(SpriteBatch batch) {
         font.draw(batch, "HIGHSCORES\n" +
+                highScore +
                 "\n" +
                 "Press ESC to return to main menu.", x, y);
     }
@@ -77,6 +96,23 @@ public class Menu {
                 "\n" +
                 "Press ESC to return to main menu.", x, y);
     }
+
+    private void renderGameOverMenu(SpriteBatch batch) {
+        font.draw(batch, "GAME OVER!\n" +
+                "\n" +
+                "Press R to restart", x, y);
+    }
+
+    public void setStateGameOver() {
+        currentState = STATE_GAME_OVER;
+        showMenu = true;
+    }
+
+    public void hideMenu() {
+        showMenu = false;
+    }
+
+
 
     /*
     public static void main(String[] args) {
