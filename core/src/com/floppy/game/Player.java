@@ -27,10 +27,11 @@ public class Player extends Hitbox {
     public Player(float x, float y, float width, float height) {
         super(x, y, width, height);
 
-        hitBox.width = width * 0.85f;
-        hitBox.x += width * 0.1f;
+        hitBox.width = width * 0.65f;
+        hitBox.x += width * 3000f;
+        hitBox.height = height * 0.7f;
 
-        float sizeModifier = 0.95f;
+        float sizeModifier = 0.75f;
 
         Texture birdTex1 = new Texture("sprites/Bird1.png");
         Texture birdTex2 = new Texture("sprites/bird2.png");
@@ -57,7 +58,6 @@ public class Player extends Hitbox {
         }
         playerSprites.get(spriteIndex).setPosition(x, y);
         super.update(dt);
-        hitBox.x += width * 0.1f;
     }
 
     public void render(SpriteBatch batch) {

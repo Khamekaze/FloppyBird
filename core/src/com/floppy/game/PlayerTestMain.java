@@ -39,6 +39,13 @@ public class PlayerTestMain extends ApplicationAdapter {
         //Update
         update(deltaTime);
 
+        //Render sprites
+        batch.begin();
+        batch.draw(background, 0,0, 1281, 720);
+        player.render(batch);
+        obstacleManager.render(batch);
+        //obstacle.render(batch);
+        batch.end();
         //Render hitboxes
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0f, 0f, 0f, 1f);
@@ -48,13 +55,6 @@ public class PlayerTestMain extends ApplicationAdapter {
                 obstacleManager.obstacles.get(1).getTopHitbox().width,
                 obstacleManager.obstacles.get(1).getTopHitbox().height);
         shapeRenderer.end();
-        //Render sprites
-        batch.begin();
-        batch.draw(background, 0,0, 1281, 720);
-        player.render(batch);
-        obstacleManager.render(batch);
-        //obstacle.render(batch);
-        batch.end();
     }
 
     public void update(float deltaTime) {
