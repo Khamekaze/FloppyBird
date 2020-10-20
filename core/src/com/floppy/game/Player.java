@@ -27,9 +27,8 @@ public class Player extends Hitbox {
     public Player(float x, float y, float width, float height) {
         super(x, y, width, height);
 
-        hitBox.width = width * 0.65f;
-        hitBox.x += width * 3000f;
-        hitBox.height = height * 0.7f;
+        hitBox.width = width * 0.57f;
+        hitBox.height = height * 0.57f;
 
         float sizeModifier = 0.75f;
 

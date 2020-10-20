@@ -15,10 +15,10 @@ public class Obstacle {
     private Sprite tubeBotSprite;
     private Vector2 positionTubeTop;
     private Vector2 positionTubeBot;
-    private static final int tubeOpening = 250;
+    private static final int tubeOpening = 240;
     private static final int lowestOpening = 120;
-    private static final int randomBoundary = 330;
-    private float speed = 200f;
+    private static final int randomBoundary = 350;
+    private float speed = 230f;
     private float xPos;
     private Random randomNumber;
 

@@ -21,8 +21,8 @@ public abstract class Hitbox {
     }
 
     public void update(float dt) {
-        hitBox.x = x;
-        hitBox.y = y;
+        hitBox.x = x + 8f;
+        hitBox.y = y + 8f;
     }
 
     public Rectangle getHitbox() {
