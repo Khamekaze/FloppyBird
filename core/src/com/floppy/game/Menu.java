@@ -3,15 +3,22 @@ package com.floppy.game;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
+
+
 public class Menu {
     private static int menuSelection;
     public static void main(String[] args) {
+        System.out.println("Press '0' to continue");
         Scanner sc = new Scanner(System.in);
-            System.out.println("Welcome to Flappy bird!");
-                System.out.println("1. Play");
-                System.out.println("2. High Score");
-                System.out.println("3. Help");
-                menuSelection = sc.nextInt();
+        menuSelection = sc.nextInt();
+         while(menuSelection == 0 ) {
+             while(menuSelection == 0) {
+                 System.out.println("Welcome to Flappy bird!");
+                 System.out.println("1. Play");
+                 System.out.println("2. High Score");
+                 System.out.println("3. Help");
+                 menuSelection = sc.nextInt();
+             }
              if (menuSelection == 1) {
                 //starta spelet
             } else if (menuSelection == 2) {
@@ -29,9 +36,11 @@ public class Menu {
                 System.out.println("Press '0' to return to main menu");
                 menuSelection = sc.nextInt();
             }
-            sc.close();
+            //sc.close();
 
     }
+    }
+
     public static void highScore() {
         File file = new File("./highscore.txt");
         try{
