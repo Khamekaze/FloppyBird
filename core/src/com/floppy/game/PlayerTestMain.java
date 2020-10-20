@@ -2,6 +2,7 @@ package com.floppy.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,6 +18,8 @@ public class PlayerTestMain extends ApplicationAdapter {
     ObstacleManager obstacleManager;
     Player player;
     private Texture background;
+    Menu menu;
+    boolean startGame = false;
 
     @Override
     public void create () {
@@ -27,6 +30,7 @@ public class PlayerTestMain extends ApplicationAdapter {
         shapeRenderer = new ShapeRenderer();
         collisionManager = new CollisionManager(player, obstacleManager.getObstacles());
         obstacle = new Obstacle(600f, 0f, 0f, 0f);
+        menu = new Menu(100f, 400f);
     }
 
     @Override
@@ -45,6 +49,9 @@ public class PlayerTestMain extends ApplicationAdapter {
         player.render(batch);
         obstacleManager.render(batch);
         //obstacle.render(batch);
+        if(!startGame) {
+            menu.render(batch);
+        }
         batch.end();
         //Render hitboxes
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -55,15 +62,24 @@ public class PlayerTestMain extends ApplicationAdapter {
                 obstacleManager.obstacles.get(1).getTopHitbox().width,
                 obstacleManager.obstacles.get(1).getTopHitbox().height);
         shapeRenderer.end();
+
     }
 
     public void update(float deltaTime) {
         if(collisionManager.isPlayerAlive()) {
             player.update(deltaTime);
             //obstacle.update(deltaTime);
-            obstacleManager.update(deltaTime);
+            if(startGame) {
+                obstacleManager.update(deltaTime);
+            }
         }
         collisionManager.update(deltaTime);
+
+        menu.update(deltaTime);
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !startGame) {
+            startGame = true;
+        }
     }
 
     @Override
