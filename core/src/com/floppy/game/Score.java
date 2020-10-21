@@ -45,13 +45,13 @@ public class Score {
 
     public void render(SpriteBatch batch) {
         if(showScore) {
-            font.draw(batch, String.valueOf(numberOfObstaclesPassed), 300f, 600f);
             if(numberOfObstaclesPassed > highScore) {
                 highscoreText.draw(batch);
-                font.draw(batch, String.valueOf(numberOfObstaclesPassed),
-                        highscoreText.getX() + highscoreText.getTexture().getWidth() / 2,
-                        highscoreText.getY() + highscoreText.getTexture().getHeight() / 2 - 15f);
+
             }
+            font.draw(batch, String.valueOf(numberOfObstaclesPassed),
+                    highscoreText.getX() + highscoreText.getTexture().getWidth() / 2,
+                    highscoreText.getY() + highscoreText.getTexture().getHeight() / 2 - 15f);
         } else {
             font.draw(batch, String.valueOf(numberOfObstaclesPassed), 540f, 700f);
         }

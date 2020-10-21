@@ -27,7 +27,7 @@ public class Menu {
         this.x = x;
         this.y = y;
         font = new BitmapFont();
-        gameOverUI = new Sprite(new Texture("ifDeadrReset.png"));
+        gameOverUI = new Sprite(new Texture("MenuFlip.png"));
         infoUI = new Sprite(new Texture("ifPlayerPressInfo.png"));
         highscoreUI = new Sprite(new Texture("ifHighScorePressed.png"));
         menuUI = new Sprite(new Texture("menu2fixed.png"));
