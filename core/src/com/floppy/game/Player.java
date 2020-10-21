@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Polygon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Player extends Hitbox {
     private float yVelocity = 0f;
@@ -18,6 +19,9 @@ public class Player extends Hitbox {
     private float maxYVelocity = -1600f;
     private float flapDelay = 0.1f;
     private boolean isAlive = true;
+    private float rotationSpeed = 5f;
+    private float currentRotation = 0f;
+    private boolean rotate = false;
 
     private boolean hasStarted = false;
     private boolean flapped = false;
@@ -47,12 +51,16 @@ public class Player extends Hitbox {
         playerSprites.add(playerSprite1);
         playerSprites.add(playerSprite2);
         playerSprites.add(playerSprite3);
+        for(Sprite s : playerSprites) {
+            s.setOrigin(s.getX() + s.getWidth() / 2, s.getY() + s.getHeight() / 2);
+        }
     }
 
     public void update(float dt) {
 
         flap();
         animatePlayer(dt);
+        //rotatePlayer(dt);
         if(hasStarted) {
             applyGravity(dt);
         }
@@ -65,6 +73,13 @@ public class Player extends Hitbox {
 
     public void render(SpriteBatch batch) {
         playerSprites.get(spriteIndex).draw(batch);
+    }
+
+    void rotatePlayer(float dt) {
+        if(isAlive && rotate) {
+            currentRotation += rotationSpeed;
+            playerSprites.get(spriteIndex).setRotation(currentRotation);
+        }
     }
 
     void applyGravity(float dt) {
@@ -80,11 +95,21 @@ public class Player extends Hitbox {
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             if(!hasStarted) {
                 hasStarted = true;
+                rotate = true;
             }
             if(!flapped) {
                 yVelocity = flapVelocity;
                 System.out.println("FLAP");
                 flapped = true;
+                Random rand = new Random();
+                double newRotationSpeed = rand.nextInt(10 + 5);
+                if(rotationSpeed > 0f) {
+                    rotationSpeed = (float)newRotationSpeed;
+                    rotationSpeed *= -1;
+                } else {
+                    rotationSpeed = (float)newRotationSpeed;
+                }
+
             }
 
         } else {
