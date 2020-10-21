@@ -7,7 +7,6 @@ public class CollisionManager {
 
     Player player;
     List<Obstacle> obstacleHitboxes;
-    private boolean playerAlive = true;
 
     public CollisionManager(Player player, ArrayList<Obstacle> obstacleHitboxes) {
         this.player = player;
