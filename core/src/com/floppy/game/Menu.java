@@ -2,7 +2,9 @@ package com.floppy.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.io.File;
@@ -19,11 +21,24 @@ public class Menu {
     private int currentState = 0;
     boolean showMenu = true;
     private int highScore = 0;
+    private Sprite gameOverUI, infoUI, highscoreUI, menuUI;
 
     public Menu(float x, float y) {
         this.x = x;
         this.y = y;
         font = new BitmapFont();
+        gameOverUI = new Sprite(new Texture("ifDeadrReset.png"));
+        infoUI = new Sprite(new Texture("ifPlayerPressInfo.png"));
+        highscoreUI = new Sprite(new Texture("ifHighScorePressed.png"));
+        menuUI = new Sprite(new Texture("menu2fixed.png"));
+        menuUI.setPosition(Gdx.graphics.getWidth() / 2,
+                Gdx.graphics.getHeight() / 2 - menuUI.getTexture().getHeight() / 2);
+        infoUI.setPosition(Gdx.graphics.getWidth() / 2,
+                Gdx.graphics.getHeight() / 2 - infoUI.getTexture().getHeight() / 2);
+        highscoreUI.setPosition(Gdx.graphics.getWidth() / 2,
+                Gdx.graphics.getHeight() / 2 - highscoreUI.getTexture().getHeight() / 2);
+        gameOverUI.setPosition(Gdx.graphics.getWidth() / 2 - gameOverUI.getTexture().getWidth() / 2,
+                Gdx.graphics.getHeight() / 2 - gameOverUI.getTexture().getHeight() / 2);
         readHighscore();
     }
 
@@ -76,31 +91,21 @@ public class Menu {
     }
 
     private void renderMainMenu(SpriteBatch batch) {
-        font.draw(batch, "Welcome to Floppy Bird!", x, y);
-        font.draw(batch, "SPACE to start", x, y - 25f);
-        font.draw(batch, "Press H to see highscores", x,  y - 50f);
-        font.draw(batch, "Press I for info", x, y - 75f);
+        menuUI.draw(batch);
     }
 
     private void renderHighscoreMenu(SpriteBatch batch) {
-        font.draw(batch, "HIGHSCORES\n" +
-                highScore +
-                "\n" +
-                "Press ESC to return to main menu.", x, y);
+        highscoreUI.draw(batch);
+        font.draw(batch, String.valueOf(highScore), highscoreUI.getX() + highscoreUI.getTexture().getWidth() / 2,
+                highscoreUI.getY() + highscoreUI.getTexture().getHeight() / 2);
     }
 
     private void renderInfoMenu(SpriteBatch batch) {
-        font.draw(batch, "Welcome to Flappy Bird KYH edition!\n" +
-                "To play simply press SPACE in the menu selection.\n" +
-                "Press SPACE to jump and avoid the obstacles.\n" +
-                "\n" +
-                "Press ESC to return to main menu.", x, y);
+        infoUI.draw(batch);
     }
 
     private void renderGameOverMenu(SpriteBatch batch) {
-        font.draw(batch, "GAME OVER!\n" +
-                "\n" +
-                "Press R to restart", x, y);
+        gameOverUI.draw(batch);
     }
 
     public void setStateGameOver() {
