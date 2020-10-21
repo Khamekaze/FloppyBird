@@ -2,6 +2,7 @@ package com.floppy.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -22,6 +23,8 @@ public class Menu {
     boolean showMenu = true;
     private int highScore = 0;
     private Sprite gameOverUI, infoUI, highscoreUI, menuUI;
+    private Sound select;
+    private Sound death;
 
     public Menu(float x, float y) {
         this.x = x;
@@ -40,6 +43,8 @@ public class Menu {
         gameOverUI.setPosition(Gdx.graphics.getWidth() / 2 - gameOverUI.getTexture().getWidth() / 2,
                 Gdx.graphics.getHeight() / 2 - gameOverUI.getTexture().getHeight() / 2);
         readHighscore();
+        select = Gdx.audio.newSound(Gdx.files.internal("Select.wav"));
+        death = Gdx.audio.newSound(Gdx.files.internal("Death.wav"));
     }
 
     public void update(float dt) {
@@ -79,14 +84,17 @@ public class Menu {
     private void menuInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             currentState = 0;
+            select.play();
         } else if(Gdx.input.isKeyJustPressed(Input.Keys.H)) {
             if(currentState == STATE_MAIN_MENU) {
                 currentState = STATE_HIGHSCORE;
             }
+            select.play();
         } else if(Gdx.input.isKeyJustPressed(Input.Keys.I)) {
             if(currentState == STATE_MAIN_MENU) {
                 currentState = STATE_INFO;
             }
+            select.play();
         }
     }
 
@@ -110,13 +118,19 @@ public class Menu {
 
     public void setStateGameOver() {
         currentState = STATE_GAME_OVER;
-        showMenu = true;
+        if(showMenu == false) {
+            showMenu = true;
+            death.play();
+        }
     }
 
     public void hideMenu() {
         showMenu = false;
     }
 
+    public void playRestartSound() {
+        select.play();
+    }
 
 
     /*

@@ -2,6 +2,7 @@ package com.floppy.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,6 +24,7 @@ public class Score {
     ObstacleManager obstacleManager;
     BitmapFont font;
     private Sprite highscoreText;
+    private Sound passTube;
 
     public Score(ObstacleManager obstacles) {
         obstacleManager = obstacles;
@@ -31,6 +33,7 @@ public class Score {
         highscoreText.setPosition(Gdx.graphics.getWidth() / 2 - highscoreText.getTexture().getWidth() / 2,
                 Gdx.graphics.getHeight() / 2 - highscoreText.getTexture().getHeight() / 2);
         readHighScoreFile();
+        passTube = Gdx.audio.newSound(Gdx.files.internal("PassTube.wav"));
     }
 
     public void update(float dt) {
@@ -38,7 +41,7 @@ public class Score {
             if(o.getXPosition() <= 400f && !o.isHasGivenScore()) {
                 points();
                 o.giveScore();
-                System.out.println(numberOfObstaclesPassed);
+                passTube.play();
             }
         }
     }

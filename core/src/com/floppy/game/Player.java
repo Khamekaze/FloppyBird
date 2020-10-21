@@ -2,6 +2,7 @@ package com.floppy.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,6 +23,7 @@ public class Player extends Hitbox {
     private float rotationSpeed = 5f;
     private float currentRotation = 0f;
     private boolean rotate = false;
+    private Sound flap;
 
     private boolean hasStarted = false;
     private boolean flapped = false;
@@ -54,6 +56,7 @@ public class Player extends Hitbox {
         for(Sprite s : playerSprites) {
             s.setOrigin(s.getX() + s.getWidth() / 2, s.getY() + s.getHeight() / 2);
         }
+        flap = Gdx.audio.newSound(Gdx.files.internal("Flap.wav"));
     }
 
     public void update(float dt) {
@@ -99,7 +102,7 @@ public class Player extends Hitbox {
             }
             if(!flapped) {
                 yVelocity = flapVelocity;
-                System.out.println("FLAP");
+                flap.play();
                 flapped = true;
                 Random rand = new Random();
                 double newRotationSpeed = rand.nextInt(10 + 5);

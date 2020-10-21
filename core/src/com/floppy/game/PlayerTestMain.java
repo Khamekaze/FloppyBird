@@ -88,6 +88,7 @@ public class PlayerTestMain extends ApplicationAdapter {
         collisionManager = null;
         collisionManager = new CollisionManager(player, obstacleManager.getObstacles());
         menu.hideMenu();
+        menu.playRestartSound();
         scoreManager = null;
         scoreManager = new Score(obstacleManager);
         scoreManager.resetScore();
