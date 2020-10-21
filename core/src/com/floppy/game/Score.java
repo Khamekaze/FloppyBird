@@ -2,7 +2,9 @@ package com.floppy.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.w3c.dom.ls.LSOutput;
 
@@ -20,10 +22,14 @@ public class Score {
     private boolean showScore = false;
     ObstacleManager obstacleManager;
     BitmapFont font;
+    private Sprite highscoreText;
 
     public Score(ObstacleManager obstacles) {
         obstacleManager = obstacles;
         font = new BitmapFont();
+        highscoreText = new Sprite(new Texture("NewHighScore.png"));
+        highscoreText.setPosition(Gdx.graphics.getWidth() / 2 - highscoreText.getTexture().getWidth() / 2,
+                Gdx.graphics.getHeight() / 2 - highscoreText.getTexture().getHeight() / 2);
         readHighScoreFile();
     }
 
@@ -41,8 +47,10 @@ public class Score {
         if(showScore) {
             font.draw(batch, String.valueOf(numberOfObstaclesPassed), 300f, 600f);
             if(numberOfObstaclesPassed > highScore) {
-                font.draw(batch, "NEW HIGHSCORE!\n" +
-                        numberOfObstaclesPassed, 300f, 575f);
+                highscoreText.draw(batch);
+                font.draw(batch, String.valueOf(numberOfObstaclesPassed),
+                        highscoreText.getX() + highscoreText.getTexture().getWidth() / 2,
+                        highscoreText.getY() + highscoreText.getTexture().getHeight() / 2 - 15f);
             }
         } else {
             font.draw(batch, String.valueOf(numberOfObstaclesPassed), 540f, 700f);
