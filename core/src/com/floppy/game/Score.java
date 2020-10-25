@@ -23,8 +23,10 @@ public class Score {
     private final BitmapFont font;
     private final Sprite highscoreText;
     private final Sound passTube;
+    private String highscoreFile;
 
-    public Score(ObstacleManager obstacles) {
+    public Score(ObstacleManager obstacles, String highscoreFile) {
+        this.highscoreFile = highscoreFile;
         readHighScoreFile();
         obstacleManager = obstacles;
         font = new BitmapFont();
@@ -42,7 +44,7 @@ public class Score {
     public void update() {
         for(Obstacle o : obstacleManager.getObstacles()) {
             if(o.getXPosition() <= 300f && !o.isHasGivenScore()) {
-                points();
+                addPoint();
                 o.giveScore();
                 passTube.play();
             }
@@ -73,7 +75,7 @@ public class Score {
     public void writeNewHighscore() {
         if(numberOfObstaclesPassed > highScore){
             try {
-                FileWriter fw = new FileWriter("./highscore.txt");
+                FileWriter fw = new FileWriter("./" + highscoreFile + ".txt");
                 fw.write(String.valueOf(numberOfObstaclesPassed));
                 fw.close();
             }catch (Exception e){
@@ -82,16 +84,26 @@ public class Score {
             }
         }
     }
+
     public void readHighScoreFile () {
-        File file = new File("./highscore.txt");
+        File file = new File("./" + highscoreFile + ".txt");
         try{
-            Scanner rf = new Scanner(file);
-            highScore = rf.nextInt();
-            rf.close();
+            if(file.exists()) {
+                Scanner rf = new Scanner(file);
+                if(rf.hasNextInt()) {
+                    highScore = rf.nextInt();
+                }
+                rf.close();
+            } else {
+                file.createNewFile();
+                highScore = 0;
+            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
     public void resetScore (){numberOfObstaclesPassed = 0; }
-    public void points() {numberOfObstaclesPassed++;}
+    public void addPoint() {numberOfObstaclesPassed++;}
 }

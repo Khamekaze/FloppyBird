@@ -12,12 +12,11 @@ public class ObstacleManager {
     private final ArrayList<Obstacle> obstacles = new ArrayList<>();
     private boolean removed = false;
 
-    public ObstacleManager (){
+    public ObstacleManager(int numberOfObstacles){
         float startOffset = 800f;
-        obstacles.add(new Obstacle(startOffset + 600f));
-        obstacles.add(new Obstacle(startOffset + 1000f));
-        obstacles.add(new Obstacle(startOffset + 1400f));
-        obstacles.add(new Obstacle(startOffset + 1800f));
+        for(int i = 0; i < numberOfObstacles; i++) {
+            obstacles.add(new Obstacle(startOffset + 600f + (400f * i)));
+        }
     }
 
     public void update(float dt) {

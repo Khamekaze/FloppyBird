@@ -33,10 +33,10 @@ public class Main extends ApplicationAdapter {
         background = new Texture("bg.png");
         batch = new SpriteBatch();
         player = new Player((Gdx.graphics.getWidth() / 2 - 150f), (Gdx.graphics.getHeight() / 2), 131, 93f);
-        obstacleManager = new ObstacleManager();
+        obstacleManager = new ObstacleManager(4);
         collisionManager = new CollisionManager(player, obstacleManager.getObstacles());
         menu = new Menu();
-        scoreManager = new Score(obstacleManager);
+        scoreManager = new Score(obstacleManager, "highscore");
     }
 
     @Override
@@ -94,13 +94,13 @@ public class Main extends ApplicationAdapter {
         player = null;
         player = new Player((Gdx.graphics.getWidth() / 2) - 150f, (Gdx.graphics.getHeight() / 2), 131, 93f);
         obstacleManager = null;
-        obstacleManager = new ObstacleManager();
+        obstacleManager = new ObstacleManager(4);
         collisionManager = null;
         collisionManager = new CollisionManager(player, obstacleManager.getObstacles());
         menu.hideMenu();
         menu.playRestartSound();
         scoreManager = null;
-        scoreManager = new Score(obstacleManager);
+        scoreManager = new Score(obstacleManager, "highscore");
         scoreManager.resetScore();
     }
 }
