@@ -1,44 +1,47 @@
 package com.floppy.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
+/**
+ * Responsible for manipulating and rendering the players score
+ * as well as saving any new highscore to a local file.
+ */
 public class Score {
-    private static int numberOfObstaclesPassed = 0;
-    private static int highScore;
-    private int newHighscore = 0;
-    private static String userAnswer;
-    private static int status;
+    private int numberOfObstaclesPassed = 0;
+    private int highScore;
     private boolean showScore = false;
-    ObstacleManager obstacleManager;
-    BitmapFont font;
-    private Sprite highscoreText;
-    private Sound passTube;
+    private final ObstacleManager obstacleManager;
+    private final BitmapFont font;
+    private final Sprite highscoreText;
+    private final Sound passTube;
 
     public Score(ObstacleManager obstacles) {
+        readHighScoreFile();
         obstacleManager = obstacles;
         font = new BitmapFont();
         highscoreText = new Sprite(new Texture("NewHighScore.png"));
-        highscoreText.setPosition(Gdx.graphics.getWidth() / 2 - highscoreText.getTexture().getWidth() / 2,
-                Gdx.graphics.getHeight() / 2 - highscoreText.getTexture().getHeight() / 2);
-        readHighScoreFile();
+        highscoreText.setPosition((float)Gdx.graphics.getWidth() / 2 - (float)highscoreText.getTexture().getWidth() / 2,
+                (float)Gdx.graphics.getHeight() / 2 - (float)highscoreText.getTexture().getHeight() / 2);
         passTube = Gdx.audio.newSound(Gdx.files.internal("PassTube.wav"));
     }
 
-    public void update(float dt) {
+    /**
+     * Iterates through the obstacles in the scene.
+     * If any obstacle is far enough to the left a point will be added
+     * to the counter.
+     */
+    public void update() {
         for(Obstacle o : obstacleManager.getObstacles()) {
-            if(o.getXPosition() <= 400f && !o.isHasGivenScore()) {
+            if(o.getXPosition() <= 300f && !o.isHasGivenScore()) {
                 points();
                 o.giveScore();
                 passTube.play();
@@ -53,8 +56,8 @@ public class Score {
 
             }
             font.draw(batch, String.valueOf(numberOfObstaclesPassed),
-                    highscoreText.getX() + highscoreText.getTexture().getWidth() / 2,
-                    highscoreText.getY() + highscoreText.getTexture().getHeight() / 2 - 15f);
+                    highscoreText.getX() + (float)highscoreText.getTexture().getWidth() / 2,
+                    highscoreText.getY() + (float)highscoreText.getTexture().getHeight() / 2 - 15f);
         } else {
             font.draw(batch, String.valueOf(numberOfObstaclesPassed), 540f, 700f);
         }
@@ -63,46 +66,8 @@ public class Score {
     public void setShowScore() {
         if(!showScore) {
             showScore = true;
-            compareScore();
+            writeNewHighscore();
         }
-    }
-
-    /*
-    public static void main(String[] args) {
-        readHighScoreFile();
-        Scanner sc = new Scanner(System.in);
-        status = sc.nextInt();
-       while(status == 1) {
-           while(status == 1){
-            //points();
-            //System.out.println(getNumberOfObstaclesPassed());
-            status = sc.nextInt();
-        }
-        higherPoints();
-        System.out.println("highest score is: " + getHighScore());
-        System.out.println("Would you like to play again? yes(y) or no(n)?: ");
-        String yes = "y";
-        String no = "n";
-        userAnswer = sc.next();
-        if(userAnswer.equals(yes)){
-            playAgain();
-            resetScore();
-        }else if(userAnswer.equals(no)){
-            status = 2;
-        }
-       }
-
-    }
-    */
-
-    void compareScore() {
-        if(numberOfObstaclesPassed > highScore) {
-            newHighscore = numberOfObstaclesPassed;
-        } else {
-            newHighscore = highScore;
-        }
-
-        writeNewHighscore();
     }
 
     public void writeNewHighscore() {
@@ -112,6 +77,7 @@ public class Score {
                 fw.write(String.valueOf(numberOfObstaclesPassed));
                 fw.close();
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("Could not save High Score!");
             }
         }
@@ -120,15 +86,12 @@ public class Score {
         File file = new File("./highscore.txt");
         try{
             Scanner rf = new Scanner(file);
-            highScore = Integer.valueOf(rf.next());
+            highScore = rf.nextInt();
             rf.close();
         }catch (Exception e){
-
+            e.printStackTrace();
         }
     }
     public void resetScore (){numberOfObstaclesPassed = 0; }
-    public static void playAgain() { status = 1; }
     public void points() {numberOfObstaclesPassed++;}
-    public int getNumberOfObstaclesPassed() {return numberOfObstaclesPassed;}
-    public static int getHighScore() {return highScore;}
 }

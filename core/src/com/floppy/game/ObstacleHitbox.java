@@ -6,8 +6,4 @@ public class ObstacleHitbox extends Hitbox {
         super(x, y, width, height);
     }
 
-    @Override
-    public void update(float dt) {
-        super.update(dt);
-    }
 }

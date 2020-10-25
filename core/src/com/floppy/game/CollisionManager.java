@@ -3,6 +3,10 @@ package com.floppy.game;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Responsible for checking for any collisions in the game scene
+ *
+ */
 public class CollisionManager {
 
     Player player;
@@ -13,7 +17,7 @@ public class CollisionManager {
         this.obstacleHitboxes = obstacleHitboxes;
     }
 
-    public void update(float dt) {
+    public void update() {
         checkCollisions();
     }
 

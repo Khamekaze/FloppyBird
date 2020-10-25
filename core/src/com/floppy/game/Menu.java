@@ -9,45 +9,37 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.Scanner;
 
-
+/**
+ * Responsible for displaying different menus within the game
+ */
 public class Menu {
-    private static int menuSelection;
     private static final int STATE_MAIN_MENU = 0, STATE_HIGHSCORE = 1, STATE_INFO = 2, STATE_GAME_OVER = 3;
 
-    private float x, y;
-    BitmapFont font;
+    private final BitmapFont font;
     private int currentState = 0;
-    boolean showMenu = true;
+    private boolean showMenu = true;
     private int highScore = 0;
-    private Sprite gameOverUI, infoUI, highscoreUI, menuUI;
-    private Sound select;
-    private Sound death;
+    private final Sprite gameOverUI, infoUI, highscoreUI, menuUI;
+    private final Sound select, death;
 
-    public Menu(float x, float y) {
-        this.x = x;
-        this.y = y;
+    public Menu() {
+        readHighscore();
+
         font = new BitmapFont();
         gameOverUI = new Sprite(new Texture("MenuFlip.png"));
         infoUI = new Sprite(new Texture("ifPlayerPressInfo.png"));
         highscoreUI = new Sprite(new Texture("ifHighScorePressed.png"));
         menuUI = new Sprite(new Texture("menu2fixed.png"));
-        menuUI.setPosition(Gdx.graphics.getWidth() / 2,
-                Gdx.graphics.getHeight() / 2 - menuUI.getTexture().getHeight() / 2);
-        infoUI.setPosition(Gdx.graphics.getWidth() / 2,
-                Gdx.graphics.getHeight() / 2 - infoUI.getTexture().getHeight() / 2);
-        highscoreUI.setPosition(Gdx.graphics.getWidth() / 2,
-                Gdx.graphics.getHeight() / 2 - highscoreUI.getTexture().getHeight() / 2);
-        gameOverUI.setPosition(Gdx.graphics.getWidth() / 2 - gameOverUI.getTexture().getWidth() / 2,
-                Gdx.graphics.getHeight() / 2 - gameOverUI.getTexture().getHeight() / 2);
-        readHighscore();
+
+        setMenuPositions();
+
         select = Gdx.audio.newSound(Gdx.files.internal("Select.wav"));
         death = Gdx.audio.newSound(Gdx.files.internal("Death.wav"));
     }
 
-    public void update(float dt) {
+    public void update() {
         menuInput();
     }
 
@@ -67,14 +59,13 @@ public class Menu {
                     renderGameOverMenu(batch);
             }
         }
-
     }
 
     private void readHighscore() {
         File file = new File("./highscore.txt");
         try{
             Scanner rf = new Scanner(file);
-            highScore = Integer.valueOf(rf.next());
+            highScore = rf.nextInt();
             rf.close();
         }catch (Exception e){
             e.printStackTrace();
@@ -104,8 +95,8 @@ public class Menu {
 
     private void renderHighscoreMenu(SpriteBatch batch) {
         highscoreUI.draw(batch);
-        font.draw(batch, String.valueOf(highScore), highscoreUI.getX() + highscoreUI.getTexture().getWidth() / 2,
-                highscoreUI.getY() + highscoreUI.getTexture().getHeight() / 2);
+        font.draw(batch, String.valueOf(highScore), highscoreUI.getX() + (float)highscoreUI.getTexture().getWidth() / 2,
+                highscoreUI.getY() + (float)highscoreUI.getTexture().getHeight() / 2);
     }
 
     private void renderInfoMenu(SpriteBatch batch) {
@@ -116,9 +107,20 @@ public class Menu {
         gameOverUI.draw(batch);
     }
 
+    private void setMenuPositions() {
+        menuUI.setPosition((float)Gdx.graphics.getWidth() / 2,
+                (float)Gdx.graphics.getHeight() / 2 - (float)menuUI.getTexture().getHeight() / 2);
+        infoUI.setPosition((float)Gdx.graphics.getWidth() / 2,
+                (float)Gdx.graphics.getHeight() / 2 - (float)infoUI.getTexture().getHeight() / 2);
+        highscoreUI.setPosition((float)Gdx.graphics.getWidth() / 2,
+                (float)Gdx.graphics.getHeight() / 2 - (float)highscoreUI.getTexture().getHeight() / 2);
+        gameOverUI.setPosition((float)Gdx.graphics.getWidth() / 2 - (float)gameOverUI.getTexture().getWidth() / 2,
+                (float)Gdx.graphics.getHeight() / 2 - (float)gameOverUI.getTexture().getHeight() / 2);
+    }
+
     public void setStateGameOver() {
         currentState = STATE_GAME_OVER;
-        if(showMenu == false) {
+        if(!showMenu) {
             showMenu = true;
             death.play();
         }
@@ -130,63 +132,6 @@ public class Menu {
 
     public void playRestartSound() {
         select.play();
-    }
-
-
-    /*
-    public static void main(String[] args) {
-        System.out.println("Press '0' to continue");
-        Scanner sc = new Scanner(System.in);
-        menuSelection = sc.nextInt();
-         while(menuSelection == 0 ) {
-             while(menuSelection == 0) {
-                 System.out.println("Welcome to Flappy bird!");
-                 System.out.println("1. Play");
-                 System.out.println("2. High Score");
-                 System.out.println("3. Help");
-                 menuSelection = sc.nextInt();
-             }
-             if (menuSelection == 1) {
-                //starta spelet
-            } else if (menuSelection == 2) {
-                highScore();
-                System.out.println(" ");
-                System.out.println("Press '0' to return to main menu");
-                menuSelection = sc.nextInt();
-            } else if (menuSelection == 3) {
-                System.out.println("Welcome to Flappy Bird KYH edition!");
-                System.out.println("To play simply press 'start' in the menu selection. ");
-                System.out.println("Press 'space' to jump.");
-                System.out.println("Make sure to avid all obstacles.");
-                System.out.println("Have fun!");
-                System.out.println(" ");
-                System.out.println("Press '0' to return to main menu");
-                menuSelection = sc.nextInt();
-            }
-            //sc.close();
-
-    }
-    }
-
-     */
-
-    public static void highScore() {
-        File file = new File("./highscore.txt");
-        try{
-            Scanner rf = new Scanner(file);
-            System.out.println("High Score is: " + rf.nextLine());
-            rf.close();
-        }catch (Exception e){
-            System.out.println("No high Score yet!");
-        }
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
     }
 }
 

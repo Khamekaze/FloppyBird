@@ -1,10 +1,12 @@
 package com.floppy.game;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * The superclass for any object that needs collision detection
+ *
+ */
 public abstract class Hitbox {
     Rectangle hitBox;
 
@@ -29,11 +31,14 @@ public abstract class Hitbox {
         return hitBox;
     }
 
-    public boolean checkPlayerCollision(Rectangle playerHitbox) {
-        if(hitBox.overlaps(playerHitbox)) {
-            return true;
-        }
-        return false;
+    /**
+     * Checks if an objects hitbox is intersecting another objects hitbox
+     *
+     * @param otherHitbox - The hitbox of another object
+     * @return true if the two hitboxes are intersecting, otherwise false
+     */
+    public boolean checkCollision(Rectangle otherHitbox) {
+        return hitBox.overlaps(otherHitbox);
     }
 
     public void setPosition(Vector2 pos) {
