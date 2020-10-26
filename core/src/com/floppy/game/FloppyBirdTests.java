@@ -1,11 +1,9 @@
 package com.floppy.game;
 
-import com.floppy.game.ObstacleHitbox;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 

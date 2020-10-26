@@ -7,10 +7,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.util.Scanner;
-
 /**
  * Responsible for manipulating and rendering the players score
  * as well as saving any new highscore to a local file.
