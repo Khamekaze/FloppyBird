@@ -18,12 +18,10 @@ public class Score {
     private final BitmapFont font;
     private final Sprite highscoreText;
     private final Sound passTube;
-    private String highscoreFile;
     HighScore hs;
 
     public Score(ObstacleManager obstacles, String highscoreFile) {
         hs = new HighScore(highscoreFile);
-        this.highscoreFile = highscoreFile;
         obstacleManager = obstacles;
         font = new BitmapFont();
         highscoreText = new Sprite(new Texture("NewHighScore.png"));

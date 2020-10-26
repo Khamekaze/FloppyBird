@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class HighScore {
     private int highScore;
-    private String highscoreFile;
+    private final String highscoreFile;
 
     public HighScore(String highscoreFile){
         this.highscoreFile = highscoreFile;

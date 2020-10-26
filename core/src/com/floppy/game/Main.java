@@ -31,7 +31,7 @@ public class Main extends ApplicationAdapter {
     public void create () {
         background = new Texture("bg.png");
         batch = new SpriteBatch();
-        player = new Player((Gdx.graphics.getWidth() / 2 - 150f), (Gdx.graphics.getHeight() / 2), 131, 93f);
+        player = new Player(((float)Gdx.graphics.getWidth() / 2 - 150f), ((float)Gdx.graphics.getHeight() / 2), 131, 93f);
         obstacleManager = new ObstacleManager(4);
         collisionManager = new CollisionManager(player, obstacleManager.getObstacles());
         menu = new Menu();
@@ -91,7 +91,7 @@ public class Main extends ApplicationAdapter {
      */
     private void restartGame() {
         player = null;
-        player = new Player((Gdx.graphics.getWidth() / 2) - 150f, (Gdx.graphics.getHeight() / 2), 131, 93f);
+        player = new Player(((float)Gdx.graphics.getWidth() / 2) - 150f, ((float)Gdx.graphics.getHeight() / 2), 131, 93f);
         obstacleManager = null;
         obstacleManager = new ObstacleManager(4);
         collisionManager = null;
