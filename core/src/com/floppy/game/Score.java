@@ -17,17 +17,17 @@ import java.util.Scanner;
  */
 public class Score {
     private int numberOfObstaclesPassed = 0;
-    private int highScore;
     private boolean showScore = false;
     private final ObstacleManager obstacleManager;
     private final BitmapFont font;
     private final Sprite highscoreText;
     private final Sound passTube;
     private String highscoreFile;
+    HighScore hs;
 
     public Score(ObstacleManager obstacles, String highscoreFile) {
+        hs = new HighScore(highscoreFile);
         this.highscoreFile = highscoreFile;
-        readHighScoreFile();
         obstacleManager = obstacles;
         font = new BitmapFont();
         highscoreText = new Sprite(new Texture("NewHighScore.png"));
@@ -53,7 +53,7 @@ public class Score {
 
     public void render(SpriteBatch batch) {
         if(showScore) {
-            if(numberOfObstaclesPassed > highScore) {
+            if(numberOfObstaclesPassed > hs.getHighScore()) {
                 highscoreText.draw(batch);
 
             }
@@ -68,41 +68,12 @@ public class Score {
     public void setShowScore() {
         if(!showScore) {
             showScore = true;
-            writeNewHighscore();
+           hs.writeNewHighscore(numberOfObstaclesPassed);
         }
     }
 
-    public void writeNewHighscore() {
-        if(numberOfObstaclesPassed > highScore){
-            try {
-                FileWriter fw = new FileWriter("./" + highscoreFile + ".txt");
-                fw.write(String.valueOf(numberOfObstaclesPassed));
-                fw.close();
-            }catch (Exception e){
-                e.printStackTrace();
-                System.out.println("Could not save High Score!");
-            }
-        }
-    }
 
-    public void readHighScoreFile () {
-        File file = new File("./" + highscoreFile + ".txt");
-        try{
-            if(file.exists()) {
-                Scanner rf = new Scanner(file);
-                if(rf.hasNextInt()) {
-                    highScore = rf.nextInt();
-                }
-                rf.close();
-            } else {
-                file.createNewFile();
-                highScore = 0;
-            }
 
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
     public void resetScore (){numberOfObstaclesPassed = 0; }
     public void addPoint() {numberOfObstaclesPassed++;}

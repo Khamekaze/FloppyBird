@@ -31,22 +31,13 @@ public class FloppyBirdTests {
     @Test
     @DisplayName("Testing if high score makes new high score")
     void testIfSetNewHighScore(){
-    Score score = new Score(new ObstacleManager(0), "highscore");
-    //assertEquals(20, score.)
-        for(int i = 0; i<100; i++){
-            score.addPoint();
-        }
-        score.writeNewHighscore();
-        File file = new File ("./highscore.txt");
-        Scanner sc;
-        int noll = 0;
-        try {
-            sc = new Scanner (file);
-            noll = sc.nextInt();
-        }   catch (IOException e){
-            System.err.println("Could not read file");
-        }
-        assertEquals(100, noll);
+    HighScore hs = new HighScore("testHighScore.txt");
+    hs.writeNewHighscore(1000);
+    assertEquals(1000, hs.readHighScoreFile());
+    hs.writeNewHighscore(999);
+    assertEquals(1000, hs.readHighScoreFile());
+    hs.writeNewHighscore(1001);
+    assertEquals(1001, hs.readHighScoreFile());
     }
 
 }
