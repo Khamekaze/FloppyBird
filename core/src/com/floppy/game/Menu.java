@@ -75,17 +75,17 @@ public class Menu {
     private void menuInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             currentState = 0;
-            select.play();
+            select.play(0.5f);
         } else if(Gdx.input.isKeyJustPressed(Input.Keys.H)) {
             if(currentState == STATE_MAIN_MENU) {
                 currentState = STATE_HIGHSCORE;
             }
-            select.play();
+            select.play(0.5f);
         } else if(Gdx.input.isKeyJustPressed(Input.Keys.I)) {
             if(currentState == STATE_MAIN_MENU) {
                 currentState = STATE_INFO;
             }
-            select.play();
+            select.play(0.5f);
         }
     }
 
@@ -131,7 +131,7 @@ public class Menu {
     }
 
     public void playRestartSound() {
-        select.play();
+        select.play(0.5f);
     }
 }
 
