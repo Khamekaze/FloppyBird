@@ -36,7 +36,7 @@ public class Player extends Hitbox {
 
         instantiatePlayerSprites();
 
-        flap = Gdx.audio.newSound(Gdx.files.internal("Flap.wav"));
+        flap = Gdx.audio.newSound(Gdx.files.internal("flap2.wav"));
     }
 
     public void update(float dt) {
@@ -72,7 +72,7 @@ public class Player extends Hitbox {
             }
             if(!hasFlapped) {
                 yVelocity = flapVelocity;
-                flap.play();
+                flap.play(0.50f);
                 hasFlapped = true;
             }
 

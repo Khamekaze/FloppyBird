@@ -33,7 +33,7 @@ public class Score {
         highscoreText = new Sprite(new Texture("NewHighScore.png"));
         highscoreText.setPosition((float)Gdx.graphics.getWidth() / 2 - (float)highscoreText.getTexture().getWidth() / 2,
                 (float)Gdx.graphics.getHeight() / 2 - (float)highscoreText.getTexture().getHeight() / 2);
-        passTube = Gdx.audio.newSound(Gdx.files.internal("PassTube.wav"));
+        passTube = Gdx.audio.newSound(Gdx.files.internal("PassTube2.wav"));
     }
 
     /**
