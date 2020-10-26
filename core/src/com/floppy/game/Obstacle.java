@@ -12,8 +12,8 @@ public class Obstacle {
     private final Sprite tubeTopSprite, tubeBotSprite;
     private final Vector2 positionTubeTop, positionTubeBot;
     private static final int tubeOpening = 240;
-    private static final int lowestOpening = 120;
-    private static final int randomBoundary = 350;
+    private static final int lowestOpening = 70;
+    private static final int randomBoundary = 340;
     private float xPos;
     private boolean hasGivenScore = false;
 
